@@ -16,8 +16,10 @@ Sourcing updates the terminal's environment variables so it knows exactly where 
 [cite_start]The `entry_points` console script acts as a map for ROS 2. It links a simple terminal command name (like `simple_node`) to the specific Python executable and function (like `main`) so the system knows exactly what code to run when the `ros2 run` command is executed if this is not included then the result would either be random or unwanted[cite: 190, 217].
 
 **5. Draw (by hand or ASCII) a diagram showing one publisher and one subscriber connected by a topic.**
-[cite_start] This is the best i could do :)
 
+This is the best I could do :)
+
+```text
 +-----------------+                                 +-------------------+
 |     Node A      |                                 |      Node B       |
 |   (Publisher)   |                                 |   (Subscriber)    |
