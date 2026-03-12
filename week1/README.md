@@ -1,5 +1,8 @@
 # Mobile Robotics Lab - Week 1
 
+*Instructor - Ma'am Maria Akram*
+*Repo Owner - Muhammad Rayan*
+
 ## Description
 
 **This repository contains the deliverables for Week 1 of the Mobile Robotics lab.** 
