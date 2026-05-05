@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<robot name="optimus_omni_racecar">
+
+  <!-- ================================== -->
+  <!-- OPTIMUS PRIME COLOR PALETTE        -->
+  <!-- ================================== -->
+  <material name="prime_red">
+    <color rgba="0.85 0.1 0.1 1"/>
+  </material>
+  <material name="prime_blue">
+    <color rgba="0.05 0.15 0.7 1"/>
+  </material>
+  <material name="chrome_silver">
+    <color rgba="0.75 0.75 0.8 1"/>
+  </material>
+  <material name="dark_steel">
+    <color rgba="0.15 0.15 0.15 1"/>
+  </material>
+  <material name="matrix_blue">
+    <color rgba="0.1 0.8 1.0 1"/> <!-- For glowing sensors (his eyes) -->
+  </material>
+
+  <!-- ================================== -->
+  <!-- BASE LINK                          -->
+  <!-- ================================== -->
+  <link name="base_link"></link>
+
+  <!-- ================================== -->
+  <!-- CHASSIS (Prime's Torso)            -->
+  <!-- ================================== -->
+  <link name="chassis">
+    <visual>
+      <geometry>
+        <box size="0.6 0.35 0.06"/>
+      </geometry>
+      <material name="prime_red"/>
+    </visual>
+  </link>
+  <joint name="base_to_chassis" type="fixed">
+    <parent link="base_link"/>
+    <child link="chassis"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Cockpit / Upper Deck (Prime's Helmet/Legs) -->
+  <link name="cockpit">
+    <visual>
+      <geometry>
+        <box size="0.25 0.2 0.05"/>
+      </geometry>
+      <material name="prime_blue"/>
+    </visual>
+  </link>
+  <joint name="chassis_to_cockpit" type="fixed">
+    <parent link="chassis"/>
+    <child link="cockpit"/>
+    <origin xyz="-0.05 0 0.055" rpy="0 0 0"/> 
+  </joint>
+
+  <!-- ================================== -->
+  <!-- OMNIDIRECTIONAL WHEELS             -->
+  <!-- ================================== -->
+  
+  <!-- Front Left -->
+  <link name="front_left_wheel">
+    <visual>
+      <geometry><cylinder length="0.06" radius="0.08"/></geometry>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/> 
+      <material name="dark_steel"/>
+    </visual>
+  </link>
+  <joint name="fl_wheel_joint" type="continuous">
+    <parent link="chassis"/>
+    <child link="front_left_wheel"/>
+    <origin xyz="0.2 0.205 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Front Right -->
+  <link name="front_right_wheel">
+    <visual>
+      <geometry><cylinder length="0.06" radius="0.08"/></geometry>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/> 
+      <material name="dark_steel"/>
+    </visual>
+  </link>
+  <joint name="fr_wheel_joint" type="continuous">
+    <parent link="chassis"/>
+    <child link="front_right_wheel"/>
+    <origin xyz="0.2 -0.205 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Rear Left -->
+  <link name="rear_left_wheel">
+    <visual>
+      <geometry><cylinder length="0.06" radius="0.08"/></geometry>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/> 
+      <material name="dark_steel"/>
+    </visual>
+  </link>
+  <joint name="rl_wheel_joint" type="continuous">
+    <parent link="chassis"/>
+    <child link="rear_left_wheel"/>
+    <origin xyz="-0.2 0.205 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Rear Right -->
+  <link name="rear_right_wheel">
+    <visual>
+      <geometry><cylinder length="0.06" radius="0.08"/></geometry>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/> 
+      <material name="dark_steel"/>
+    </visual>
+  </link>
+  <joint name="rr_wheel_joint" type="continuous">
+    <parent link="chassis"/>
+    <child link="rear_right_wheel"/>
+    <origin xyz="-0.2 -0.205 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- ================================== -->
+  <!-- SENSOR SUITE                       -->
+  <!-- ================================== -->
+  
+  <!-- 1. LiDAR (Prime's Smokestacks/Chrome accents) -->
+  <link name="lidar_link">
+    <visual>
+      <geometry><cylinder length="0.04" radius="0.05"/></geometry>
+      <material name="chrome_silver"/>
+    </visual>
+  </link>
+  <joint name="lidar_joint" type="fixed">
+    <parent link="cockpit"/>
+    <child link="lidar_link"/>
+    <origin xyz="0.05 0 0.045" rpy="0 0 0"/>
+  </joint>
+
+  <!-- 2. Front Camera (Glowing Eyes) -->
+  <link name="camera_link">
+    <visual>
+      <geometry><box size="0.02 0.06 0.03"/></geometry>
+      <material name="matrix_blue"/>
+    </visual>
+  </link>
+  <joint name="camera_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="camera_link"/>
+    <origin xyz="0.30 0 0.015" rpy="0 0 0"/>
+  </joint>
+
+  <!-- 3. IMU Sensor (Internal Balance) -->
+  <link name="imu_link">
+    <visual>
+      <geometry><box size="0.03 0.03 0.01"/></geometry>
+      <material name="chrome_silver"/>
+    </visual>
+  </link>
+  <joint name="imu_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0.035" rpy="0 0 0"/> 
+  </joint>
+
+  <!-- 4. Ultrasonic Sensors (Collision Avoidance) -->
+  <link name="sonar_left">
+    <visual>
+      <geometry><cylinder length="0.01" radius="0.015"/></geometry>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+      <material name="matrix_blue"/>
+    </visual>
+  </link>
+  <joint name="sonar_left_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="sonar_left"/>
+    <origin xyz="0.305 0.1 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="sonar_right">
+    <visual>
+      <geometry><cylinder length="0.01" radius="0.015"/></geometry>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+      <material name="matrix_blue"/>
+    </visual>
+  </link>
+  <joint name="sonar_right_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="sonar_right"/>
+    <origin xyz="0.305 -0.1 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>
